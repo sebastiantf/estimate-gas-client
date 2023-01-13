@@ -1,8 +1,8 @@
 {
-  "name": "ts-template",
+  "name": "estimate-gas-client",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/sebastiantf/ts-template.git",
+  "repository": "https://github.com/sebastiantf/estimate-gas-client.git",
   "author": "Sebastian T F <sebastian.tharakan97@gmail.com>",
   "license": "MIT",
   "scripts": {
