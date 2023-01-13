@@ -51,4 +51,10 @@ export const estimateGas = async (
     estimateGas
   );
   console.log('🚀 ~ file: estimateGas.ts:49 ~ gasUsed', gasUsed.toString());
+
+  const gasUsedPlusBaseTxnGas = gasUsed.add(20_000);
+  console.log(
+    '🚀 ~ file: estimateGas.ts:67 ~ gasUsedPlusBaseTxnGas',
+    gasUsedPlusBaseTxnGas.toString()
+  );
 };
