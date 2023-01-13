@@ -1,0 +1,17 @@
+{
+  "name": "ts-template",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/sebastiantf/ts-template.git",
+  "author": "Sebastian T F <sebastian.tharakan97@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "start": "yarn build && node dist/index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.16",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.3"
+  }
+}
