@@ -17,7 +17,7 @@
         "type": "bytes"
       }
     ],
-    "name": "estimateGas",
+    "name": "estimateGasForTxn",
     "outputs": [
       {
         "internalType": "uint256",
