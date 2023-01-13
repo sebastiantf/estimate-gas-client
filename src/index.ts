@@ -7,6 +7,7 @@ import { parseEther } from 'ethers/lib/utils';
 
 (async function () {
   const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
+  const signer = new ethers.Wallet(config.privateKey, provider);
 
   const senderAddress = '0xFB5b21C1d090D40A29cd7BB9BbE3eBA9e8f06b91';
   const multisendContract = Multisend__factory.connect(
@@ -26,6 +27,14 @@ import { parseEther } from 'ethers/lib/utils';
     tokenAddress,
     recipients,
     amounts
+  );
+
+  const estimateActualMultisend = await multisendContract
+    .connect(signer)
+    .estimateGas.multisendToken(tokenAddress, recipients, amounts);
+  console.log(
+    '🚀 ~ file: estimateGas.ts:32 ~ estimateActualMultisend',
+    estimateActualMultisend.toString()
   );
 
   await estimateGas(senderAddress, targetTxn);
