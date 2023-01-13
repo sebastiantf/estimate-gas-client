@@ -3,7 +3,6 @@
     "target": "es2016",
     "lib": ["es6"],
     "module": "commonjs",
-    "rootDir": "src",
     "resolveJsonModule": true,
     "allowJs": true,
     "outDir": "dist",
@@ -13,5 +12,4 @@
     "noImplicitAny": true,
     "skipLibCheck": true
   },
-  "include": ["types/**/*"]
 }
