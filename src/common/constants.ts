@@ -5,4 +5,5 @@ export const MULTISEND_ADDRESSES: {
   [key: number]: string;
 } = {
   1: '0x22Bc0693163eC3CeE5DeD3c2EE55ddbCb2bA9bbe',
+  80001: '0x02B46AF4017B6f013B600b995f16659a702a3128',
 };
