@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 import { config } from '../common/config';
 import Web3 from 'web3';
 import { ESTIMATE_GAS_BYTECODE } from '../common/constants';
-import { EstimateGas__factory } from '../../types';
+import { EstimateGas__factory } from '../types';
 
 const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
 

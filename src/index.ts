@@ -1,6 +1,6 @@
 import { Wallet, ethers } from 'ethers';
 import { estimateGas } from './lib/estimateGas';
-import { Multisend__factory } from '../types';
+import { Multisend__factory } from './types';
 import { config } from './common/config';
 import { MULTISEND_ADDRESSES } from './common/constants';
 import { parseEther } from 'ethers/lib/utils';
