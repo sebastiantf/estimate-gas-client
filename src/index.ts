@@ -39,7 +39,9 @@ import { getAllowanceStateDiff } from './lib/allowance';
       '🚀 ~ file: estimateGas.ts:32 ~ estimateActualMultisend',
       estimateActualMultisend.toString()
     );
-  } catch {}
+  } catch {
+    console.log('⚠️ estimateActualMultisend failed. Try approving the token onchain');
+  }
 
   const allowanceStateDiff = await getAllowanceStateDiff(
     tokenAddress,
