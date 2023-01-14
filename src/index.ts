@@ -28,14 +28,15 @@ import { parseEther } from 'ethers/lib/utils';
     recipients,
     amounts
   );
-
-  const estimateActualMultisend = await multisendContract
-    .connect(signer)
-    .estimateGas.multisendToken(tokenAddress, recipients, amounts);
-  console.log(
-    '🚀 ~ file: estimateGas.ts:32 ~ estimateActualMultisend',
-    estimateActualMultisend.toString()
-  );
+  try {
+    const estimateActualMultisend = await multisendContract
+      .connect(signer)
+      .estimateGas.multisendToken(tokenAddress, recipients, amounts);
+    console.log(
+      '🚀 ~ file: estimateGas.ts:32 ~ estimateActualMultisend',
+      estimateActualMultisend.toString()
+    );
+  } catch {}
 
   await estimateGas(senderAddress, targetTxn);
 })();
