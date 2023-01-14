@@ -35,9 +35,10 @@ Allowance of from -> to *with* stateDiff  0xffffffffffffffffffffffffffffffffffff
 ```
 
 ```sh
-🚀 ~ file: estimateGas.ts:32 ~ estimateActualMultisend 147508
+🚀 ~ file: estimateGas.ts:32 ~ estimateActualMultisend 147520
 Allowance of from -> to without stateDiff 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 Allowance of from -> to *with* stateDiff  0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 🚀 ~ file: estimateGas.ts:49 ~ gasUsed 126830
 🚀 ~ file: estimateGas.ts:67 ~ gasUsedPlusBaseTxnGas 146830
+🚀 ~ file: index.ts:64 ~ diff 690
 ```
