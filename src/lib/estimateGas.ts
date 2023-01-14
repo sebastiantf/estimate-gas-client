@@ -38,6 +38,7 @@ export const estimateGas = async (
     [estimateGasAddress]: {
       code: ESTIMATE_GAS_BYTECODE,
     },
+    ...stateOverrides,
   };
 
   // @ts-ignore
