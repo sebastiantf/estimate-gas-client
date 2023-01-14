@@ -1,4 +1,4 @@
-import { Wallet, ethers } from 'ethers';
+import { BigNumber, Wallet, ethers } from 'ethers';
 import { estimateGas } from './lib/estimateGas';
 import { Multisend__factory } from './types';
 import { config } from './common/config';
@@ -31,8 +31,10 @@ import { getAllowanceStateDiff } from './lib/allowance';
     recipients,
     amounts
   );
+
+  let estimateActualMultisend: BigNumber | undefined;
   try {
-    const estimateActualMultisend = await multisendContract
+    estimateActualMultisend = await multisendContract
       .connect(signer)
       .estimateGas.multisendToken(tokenAddress, recipients, amounts);
     console.log(
@@ -40,7 +42,9 @@ import { getAllowanceStateDiff } from './lib/allowance';
       estimateActualMultisend.toString()
     );
   } catch {
-    console.log('⚠️ estimateActualMultisend failed. Try approving the token onchain');
+    console.log(
+      '⚠️ estimateActualMultisend failed. Try approving the token onchain'
+    );
   }
 
   const allowanceStateDiff = await getAllowanceStateDiff(
@@ -50,5 +54,14 @@ import { getAllowanceStateDiff } from './lib/allowance';
     2
   );
 
-  await estimateGas(senderAddress, targetTxn, allowanceStateDiff);
+  const estimatedGas = await estimateGas(
+    senderAddress,
+    targetTxn,
+    allowanceStateDiff
+  );
+
+  if (estimateActualMultisend) {
+    const diff = estimateActualMultisend.sub(estimatedGas);
+    console.log('🚀 ~ file: index.ts:64 ~ diff', diff.toString());
+  }
 })();
