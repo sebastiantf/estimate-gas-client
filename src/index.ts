@@ -4,14 +4,17 @@ import { Multisend__factory } from './types';
 import { config } from './common/config';
 import { MULTISEND_ADDRESSES } from './common/constants';
 import { parseEther } from 'ethers/lib/utils';
+import { getAllowanceStateDiff } from './lib/allowance';
 
 (async function () {
   const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
   const signer = new ethers.Wallet(config.privateKey, provider);
 
   const senderAddress = '0xFB5b21C1d090D40A29cd7BB9BbE3eBA9e8f06b91';
+  const multisendAddress =
+    MULTISEND_ADDRESSES[(await provider.getNetwork()).chainId];
   const multisendContract = Multisend__factory.connect(
-    MULTISEND_ADDRESSES[(await provider.getNetwork()).chainId],
+    multisendAddress,
     provider
   );
 
@@ -38,5 +41,12 @@ import { parseEther } from 'ethers/lib/utils';
     );
   } catch {}
 
-  await estimateGas(senderAddress, targetTxn);
+  const allowanceStateDiff = await getAllowanceStateDiff(
+    tokenAddress,
+    senderAddress,
+    multisendAddress,
+    2
+  );
+
+  await estimateGas(senderAddress, targetTxn, allowanceStateDiff);
 })();
