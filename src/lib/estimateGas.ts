@@ -1,22 +1,9 @@
 import { ethers } from 'ethers';
 import { config } from '../common/config';
-import Web3 from 'web3';
 import { ESTIMATE_GAS_BYTECODE } from '../common/constants';
 import { EstimateGas__factory } from '../types';
 
 const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
-
-const web3Provider = new Web3(config.rpcUrl);
-// extend web3's eth_call allowing state overrides
-web3Provider.extend({
-  methods: [
-    {
-      name: 'ethCallWithStateOverride',
-      call: 'eth_call',
-      params: 3,
-    },
-  ],
-});
 
 export const estimateGas = async (
   estimateGasAddress: string,
@@ -33,6 +20,14 @@ export const estimateGas = async (
     targetTxn.value ?? 0,
     targetTxn.data ?? ''
   );
+  const txnParams = [
+    {
+      from: txn.from,
+      to: txn.to,
+      data: txn.data,
+    },
+    'latest',
+  ];
 
   const stateOverride = {
     [estimateGasAddress]: {
@@ -41,12 +36,11 @@ export const estimateGas = async (
     ...stateOverrides,
   };
 
-  // @ts-ignore
-  const estimateGas = await web3Provider.ethCallWithStateOverride(
-    txn,
-    'latest',
-    stateOverride
-  );
+  const estimateGas = await provider.send('eth_call', [
+    ...txnParams,
+    stateOverride,
+  ]);
+
   const { gasUsed } = estimateGasContract.interface.decodeFunctionResult(
     'estimateGasForTxn',
     estimateGas
