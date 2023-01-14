@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 import { config } from '../common/config';
 import { ESTIMATE_GAS_BYTECODE } from '../common/constants';
 import { EstimateGas__factory } from '../types';
@@ -9,7 +9,7 @@ export const estimateGas = async (
   estimateGasAddress: string,
   targetTxn: ethers.PopulatedTransaction,
   stateOverrides: any = undefined
-) => {
+): Promise<BigNumber> => {
   const estimateGasContract = EstimateGas__factory.connect(
     estimateGasAddress,
     provider
@@ -52,4 +52,6 @@ export const estimateGas = async (
     '🚀 ~ file: estimateGas.ts:67 ~ gasUsedPlusBaseTxnGas',
     gasUsedPlusBaseTxnGas.toString()
   );
+
+  return gasUsedPlusBaseTxnGas;
 };
