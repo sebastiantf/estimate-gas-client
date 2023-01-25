@@ -1,7 +1,10 @@
 import { ethers } from 'ethers';
 import { config } from './common/config';
 import { MULTISEND_ADDRESSES } from './common/constants';
-import { getAllowanceStateDiff } from './lib/allowance';
+import {
+  calculateAllowanceStorageKeyFromSlot,
+  getAllowanceStateDiff,
+} from './lib/allowance';
 
 (async () => {
   const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
@@ -9,11 +12,11 @@ import { getAllowanceStateDiff } from './lib/allowance';
   const fromAddress = '0xFB5b21C1d090D40A29cd7BB9BbE3eBA9e8f06b91';
   const toAddress = MULTISEND_ADDRESSES[(await provider.getNetwork()).chainId];
   const allowanceSlot = 2; // Allowance slot (differs from contract to contract)
-
-  await getAllowanceStateDiff(
-    tokenAddress,
+  const storageKey = calculateAllowanceStorageKeyFromSlot(
     fromAddress,
     toAddress,
     allowanceSlot
   );
+
+  await getAllowanceStateDiff(tokenAddress, fromAddress, toAddress, storageKey);
 })();

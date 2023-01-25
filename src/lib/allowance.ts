@@ -2,16 +2,11 @@ import { ethers } from 'ethers';
 import { ERC20__factory } from '../types';
 import { config } from '../common/config';
 
-export const getAllowanceStateDiff = async (
-  tokenAddress: string,
+export const calculateAllowanceStorageKeyFromSlot = (
   fromAddress: string,
   toAddress: string,
   allowanceSlot: number
 ) => {
-  const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
-
-  const tokenContract = ERC20__factory.connect(tokenAddress, provider);
-
   // Nested mappings
   // https://ethereum.stackexchange.com/questions/102037/storage-limit-of-2-level-mapping/102220
   const temp = ethers.utils.solidityKeccak256(
@@ -22,6 +17,20 @@ export const getAllowanceStateDiff = async (
     ['uint256', 'uint256'],
     [toAddress, temp]
   );
+  console.log('🚀 ~ file: allowance.ts:39 ~ index', index);
+
+  return index;
+};
+
+export const getAllowanceStateDiff = async (
+  tokenAddress: string,
+  fromAddress: string,
+  toAddress: string,
+  storageKey: string
+) => {
+  const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
+
+  const tokenContract = ERC20__factory.connect(tokenAddress, provider);
 
   const { data } = await tokenContract.populateTransaction.allowance(
     fromAddress,
@@ -40,7 +49,7 @@ export const getAllowanceStateDiff = async (
   const stateDiff = {
     [tokenAddress]: {
       stateDiff: {
-        [index]: ethers.constants.MaxUint256.toHexString(),
+        [storageKey]: ethers.constants.MaxUint256.toHexString(),
       },
     },
   };
