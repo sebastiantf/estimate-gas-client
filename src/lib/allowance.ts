@@ -2,6 +2,18 @@ import { ethers } from 'ethers';
 import { ERC20__factory } from '../types';
 import { config } from '../common/config';
 
+export const populateAllowanceTxn = async (
+  tokenAddress: string,
+  owner: string,
+  spender: string
+) => {
+  const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
+
+  const tokenContract = ERC20__factory.connect(tokenAddress, provider);
+
+  return await tokenContract.populateTransaction.allowance(owner, spender);
+};
+
 export const calculateAllowanceStorageKeyFromSlot = (
   fromAddress: string,
   toAddress: string,
