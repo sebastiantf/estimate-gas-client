@@ -1,6 +1,7 @@
 import { ethers } from 'ethers';
 import { ERC20__factory } from '../types';
 import { config } from '../common/config';
+import { createAccessList } from './accessList';
 
 export const populateAllowanceTxn = async (
   tokenAddress: string,
@@ -12,6 +13,24 @@ export const populateAllowanceTxn = async (
   const tokenContract = ERC20__factory.connect(tokenAddress, provider);
 
   return await tokenContract.populateTransaction.allowance(owner, spender);
+};
+
+export const calculateAllowanceStorageKeyFromAccessList = async (
+  fromAddress: string,
+  toAddress: string,
+  tokenAddress: string
+) => {
+  const accessList = await createAccessList(
+    await populateAllowanceTxn(tokenAddress, fromAddress, toAddress)
+  );
+
+  const [
+    {
+      storageKeys: [storageKey],
+    },
+  ] = accessList;
+
+  return storageKey;
 };
 
 export const calculateAllowanceStorageKeyFromSlot = (
