@@ -4,7 +4,10 @@ import { Multisend__factory } from './types';
 import { config } from './common/config';
 import { MULTISEND_ADDRESSES } from './common/constants';
 import { parseEther } from 'ethers/lib/utils';
-import { getAllowanceStateDiff } from './lib/allowance';
+import {
+  calculateAllowanceStorageKeyFromAccessList,
+  getAllowanceStateDiff,
+} from './lib/allowance';
 
 (async function () {
   const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
@@ -47,11 +50,18 @@ import { getAllowanceStateDiff } from './lib/allowance';
     );
   }
 
+  const storageKeyFromAccessList =
+    await calculateAllowanceStorageKeyFromAccessList(
+      senderAddress,
+      multisendAddress,
+      tokenAddress
+    );
+
   const allowanceStateDiff = await getAllowanceStateDiff(
     tokenAddress,
     senderAddress,
     multisendAddress,
-    2
+    storageKeyFromAccessList
   );
 
   const estimatedGas = await estimateGas(
