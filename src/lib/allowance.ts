@@ -2,6 +2,7 @@ import { ethers } from 'ethers';
 import { ERC20__factory } from '../types';
 import { config } from '../common/config';
 import { createAccessList } from './accessList';
+import { formatEther } from '@ethersproject/units';
 
 export const populateAllowanceTxn = async (
   tokenAddress: string,
@@ -97,11 +98,11 @@ export const getAllowanceStateDiff = async (
 
   console.log(
     'Allowance of from -> to without stateDiff',
-    decodedCall1.toString()
+    formatEther(decodedCall1.toString())
   );
   console.log(
     'Allowance of from -> to *with* stateDiff ',
-    decodedCall2.toString()
+    formatEther(decodedCall2.toString())
   );
 
   return stateDiff;
