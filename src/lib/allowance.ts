@@ -85,14 +85,24 @@ export const getAllowanceStateDiff = async (
     },
   };
 
+  const abiCoder = new ethers.utils.AbiCoder();
+
   // Call with no state overrides
   const call1 = await provider.send('eth_call', callParams);
+  const decodedCall1 = abiCoder.decode(['uint256'], call1);
 
   // Call with no state overrides
   const call2 = await provider.send('eth_call', [...callParams, stateDiff]);
+  const decodedCall2 = abiCoder.decode(['uint256'], call2);
 
-  console.log('Allowance of from -> to without stateDiff', call1);
-  console.log('Allowance of from -> to *with* stateDiff ', call2);
+  console.log(
+    'Allowance of from -> to without stateDiff',
+    decodedCall1.toString()
+  );
+  console.log(
+    'Allowance of from -> to *with* stateDiff ',
+    decodedCall2.toString()
+  );
 
   return stateDiff;
 };
