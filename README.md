@@ -7,6 +7,7 @@ An example usecase is estimating the gas usage of a [Multisend](https://ethersca
 We [make use of](https://github.com/sebastiantf/estimate-gas-client/blob/d3796f33c80fe6d81e42c0b45babec2cc7b06bad/src/lib/estimateGas.ts#L41) Geth's State Override input for [`eth_call`](https://geth.ethereum.org/docs/interacting-with-geth/rpc/ns-eth), to **set the contract code of the caller to the `EstimateGas` contract** given below, and also **set the token allowance to max**. Thus the multisend txn and the gas estimation would execute successfully.
 
 A diff of `eth_estimateGas` and this method is also logged towards the end
+
 ## EstimateGas.sol
 
 ```solidity
@@ -35,17 +36,17 @@ contract EstimateGas {
 
 ```sh
 ⚠️ estimateActualMultisend failed. Try approving the token onchain
-Allowance of from -> to without stateDiff 0x0000000000000000000000000000000000000000000000000000000000000000
-Allowance of from -> to *with* stateDiff  0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+Allowance of from -> to without stateDiff 0.0
+Allowance of from -> to *with* stateDiff  115792089237316195423570985008687907853269984665640564039457.584007913129639935
 🚀 ~ file: estimateGas.ts:49 ~ gasUsed 124030
-🚀 ~ file: estimateGas.ts:67 ~ gasUsedPlusBaseTxnGas 144030
+🚀 ~ file: estimateGas.ts:67 ~ gasUsedPlusBaseTxnGas 145030
 ```
 
 ```sh
 🚀 ~ file: estimateGas.ts:32 ~ estimateActualMultisend 147520
-Allowance of from -> to without stateDiff 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-Allowance of from -> to *with* stateDiff  0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+Allowance of from -> to without stateDiff 115792089237316195423570985008687907853269984665640564039457.584007913129639935
+Allowance of from -> to *with* stateDiff  115792089237316195423570985008687907853269984665640564039457.584007913129639935
 🚀 ~ file: estimateGas.ts:49 ~ gasUsed 126830
-🚀 ~ file: estimateGas.ts:67 ~ gasUsedPlusBaseTxnGas 146830
-🚀 ~ file: index.ts:64 ~ diff 690
+🚀 ~ file: estimateGas.ts:67 ~ gasUsedPlusBaseTxnGas 147830
+🚀 ~ file: index.ts:64 ~ diff -310
 ```
