@@ -6,6 +6,10 @@ An example usecase is estimating the gas usage of a [Multisend](https://ethersca
 
 We [make use of](https://github.com/sebastiantf/estimate-gas-client/blob/d3796f33c80fe6d81e42c0b45babec2cc7b06bad/src/lib/estimateGas.ts#L41) Geth's State Override input for [`eth_call`](https://geth.ethereum.org/docs/interacting-with-geth/rpc/ns-eth), to **set the contract code of the caller to the `EstimateGas` contract** given below, and also **set the token allowance to max**. Thus the multisend txn and the gas estimation would execute successfully.
 
+We also make use of [`eth_createAccessList`](https://geth.ethereum.org/docs/interacting-with-geth/rpc/ns-eth#eth-createaccesslist) to correctly determine the exact storage slot that needs to be overridden to simulate the token allowance.
+
+Combination of `eth_call`'s state override and `eth_createAccessList` is a really powerful technique for applications such as these.
+
 A diff of `eth_estimateGas` and this method is also logged towards the end
 
 ## EstimateGas.sol
