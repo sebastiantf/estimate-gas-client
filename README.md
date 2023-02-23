@@ -47,14 +47,14 @@ Allowance of from -> to *with* stateDiff  11579208923731619542357098500868790785
 ```
 
 ```sh
-🚀 ~ file: estimateGas.ts:32 ~ estimateActualMultisend 147520
+🚀 ~ file: estimateGas.ts:32 ~ estimateActualMultisend 609909
 Allowance of from -> to without stateDiff 115792089237316195423570985008687907853269984665640564039457.584007913129639935
 Allowance of from -> to *with* stateDiff  115792089237316195423570985008687907853269984665640564039457.584007913129639935
-🚀 ~ file: estimateGas.ts:49 ~ gasUsed 126830
-🚀 ~ file: estimateGas.ts:67 ~ gasUsedPlusBaseTxnGas 147830
+🚀 ~ file: estimateGas.ts:49 ~ gasUsed 579724
+🚀 ~ file: estimateGas.ts:67 ~ gasUsedPlusBaseTxnGas 600724
 offsetPerRecipient:  575
-offset:  1725
-🚀 estimatePlusOffset:  149,555
-🚀 ~ file: index.ts:64 ~ diff1 -2035
-🚀 ~ file: index.ts:64 ~ diff2 -310
+offset:  11500
+🚀 estimatePlusOffset:  612,224
+🚀 ~ file: index.ts:64 ~ diff1 -2315
+🚀 ~ file: index.ts:64 ~ diff2 9185
 ```
