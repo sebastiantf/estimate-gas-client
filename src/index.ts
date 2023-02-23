@@ -70,8 +70,23 @@ import {
     allowanceStateDiff
   );
 
+  // A median offset of 575 gas units per recipient in a multisend appears to give similar gas usage estimate,
+  // between EstimateGas contract with state override and eth_estimateGas on Mumbai
+  const offsetPerRecipient = 575;
+  const offset = recipients.length * offsetPerRecipient;
+  console.log('offsetPerRecipient: ', offsetPerRecipient);
+  console.log('offset: ', offset);
+
+  const estimatePlusOffset = estimatedGas.add(offset);
+  console.log(
+    '🚀 estimatePlusOffset: ',
+    estimatePlusOffset.toNumber().toLocaleString('en-US')
+  );
+
   if (estimateActualMultisend) {
-    const diff = estimateActualMultisend.sub(estimatedGas);
-    console.log('🚀 ~ file: index.ts:64 ~ diff', diff.toString());
+    const diff1 = estimateActualMultisend.sub(estimatePlusOffset);
+    console.log('🚀 ~ file: index.ts:64 ~ diff1', diff1.toString());
+    const diff2 = estimateActualMultisend.sub(estimatedGas);
+    console.log('🚀 ~ file: index.ts:64 ~ diff2', diff2.toString());
   }
 })();
