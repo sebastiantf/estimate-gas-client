@@ -22,11 +22,8 @@ import {
   );
 
   const tokenAddress = '0xe8B3dFEE339ce4954A7300E8d421A4BA2F51e7b0';
-  const recipients = [
-    Wallet.createRandom().address,
-    Wallet.createRandom().address,
-  ];
-  const amounts = [parseEther('10'), parseEther('14')];
+  const recipients = [Wallet.createRandom().address];
+  const amounts = [parseEther('10')];
 
   const targetTxn = await multisendContract.populateTransaction.multisendToken(
     tokenAddress,
