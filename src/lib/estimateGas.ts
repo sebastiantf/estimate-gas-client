@@ -1,6 +1,5 @@
 import { BigNumber, ethers } from 'ethers';
 import { config } from '../common/config';
-import { ESTIMATE_GAS_BYTECODE } from '../common/constants';
 import { EstimateGas__factory } from '../types';
 
 const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
@@ -31,7 +30,7 @@ export const estimateGas = async (
 
   const stateOverride = {
     [estimateGasAddress]: {
-      code: ESTIMATE_GAS_BYTECODE,
+      code: await getEstimateGasBytecode(),
     },
     ...stateOverrides,
   };
@@ -54,4 +53,16 @@ export const estimateGas = async (
   );
 
   return gasUsedPlusBaseTxnGas;
+};
+
+export const getEstimateGasBytecode = async () => {
+  const deployTransaction = new EstimateGas__factory().getDeployTransaction();
+  const callParams = [
+    {
+      data: deployTransaction.data,
+    },
+    'latest',
+  ];
+  const deployedBytecode = await provider.send('eth_call', callParams);
+  return deployedBytecode;
 };
